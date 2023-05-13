@@ -28,4 +28,15 @@ class DataValidation
         ];
         return password_hash($password, PASSWORD_BCRYPT, $options);
     }
+
+    function generateToken($length = 32) {
+        $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $token = '';
+        $max = strlen($characters) - 1;
+        for ($i = 0; $i < $length; $i++) {
+            $token .= $characters[random_int(0, $max)];
+        }
+        return $token;
+    }
+    
 }
