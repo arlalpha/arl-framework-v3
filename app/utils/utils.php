@@ -22,6 +22,9 @@ function request($request_name){
     return $validity;
 }
 
+function input($param){
+    return $_REQUEST[$param];
+}
 
 function setSession($name, $data){
     $_SESSION[$name] = $data;
