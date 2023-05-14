@@ -21,13 +21,11 @@ class DataInfo extends Database
    public function dataTable($table,$columns = ['*'], $joins = [''], $condition = ['']){
         return $this->table($table,$columns,$joins,$condition);
    }
-
    public function response ($data = [],$status = "",$message = ""){
-    return [
-        'response' => $data,
-        'status'   => $status,
-        'message'  => $message
-    ];
-}
-   
+        return [
+            'data' => $data,
+            'status'   => $status,
+            'message'  => $message
+        ];
+   }
 }
