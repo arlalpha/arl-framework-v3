@@ -1,7 +1,7 @@
 <?php 
 //Configurations
-$properties =  json_decode(file_get_contents( dirname(dirname(dirname(__FILE__))) . DS ."properties.json"),false);
-$root_directory_name = basename(dirname(dirname(__DIR__)));
+$properties             =  json_decode(file_get_contents( dirname(dirname(dirname(__FILE__))) . DS ."properties.json"),false);
+$root_directory_name    = basename(dirname(dirname(__DIR__)));
 switch($properties->platform->environment){
     case 'local':
         $config = [
@@ -14,6 +14,7 @@ switch($properties->platform->environment){
             "requests"          =>  APPLICATION_PATH. DS . "requests" . DS,
             "components"        =>  APPLICATION_PATH. DS . "components" . DS,
             "static"            =>  "",
+            "allowed_origins"   => ['http://localhost'],
         ];
     break;
     case 'production':
@@ -27,6 +28,7 @@ switch($properties->platform->environment){
             "requests"          =>  APPLICATION_PATH. DS . "requests" . DS,
             "components"        =>  APPLICATION_PATH. DS . "components" . DS,
             "static"            =>  "",
+            "allowed_origins"   => [''],
         ];
     break;
 }

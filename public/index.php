@@ -1,6 +1,5 @@
 <?php 
 session_start();
-
 //Root path
 define('APPLICATION_PATH',realpath(dirname(__FILE__).'/../app'));
 
@@ -14,7 +13,7 @@ require_once APPLICATION_PATH. DS . "config" . DS . "config.php";
 require_once APPLICATION_PATH. DS . "timezone" . DS . "timezone.php";
 
 //Database
-require_once APPLICATION_PATH. DS . "database" . DS . "connection.php";
+require_once APPLICATION_PATH. DS . "database" . DS . "database.php";
 
 //Utils
 require_once APPLICATION_PATH. DS . "utils" . DS . "utils.php";
@@ -27,12 +26,11 @@ $get_page   = page('page','home');
 
 //Get page
 $get_view       = $config["pages"] . $get_page . DS . $get_page  . ".phtml";
-$get_controller  = $config["pages"] . $get_page . DS . $get_page  . ".php";
+$get_controller = $config["pages"] . $get_page . DS . $get_page  . ".php";
 $get_designer   = $config["pages"] . $get_page . DS . $get_page  . ".css";
 
 //Structure
 require_once APPLICATION_PATH. DS . "structure" . DS . "start.phtml";
-
 
 function initializeLibraries($dir){
     $ffs = scandir($dir);
@@ -40,15 +38,18 @@ function initializeLibraries($dir){
     unset($ffs[array_search('..', $ffs, true)]);
     if(count($ffs) < 1 ){
         return;
-    }else{
+    } else {
         foreach($ffs as $ff){
-            require_once APPLICATION_PATH. DS . "libraries". DS . $ff;
-            // if(is_dir($dir. '/' . $ff)){
-            // //    require_once APPLICATION_PATH. DS . "class". DS . $ff . "php";
-            // }
+            $filePath = $dir . '/' . $ff;
+            if(is_dir($filePath)){
+                initializeLibraries($filePath); 
+            } else {
+                require $filePath;
+            }
         }
     }
 }
+
 
 function initializeClass($dir){
     $ffs = scandir($dir);
@@ -56,12 +57,14 @@ function initializeClass($dir){
     unset($ffs[array_search('..', $ffs, true)]);
     if(count($ffs) < 1 ){
         return;
-    }else{
+    } else {
         foreach($ffs as $ff){
-            require_once APPLICATION_PATH. DS . "class". DS . $ff;
-            // if(is_dir($dir. '/' . $ff)){
-            // //    require_once APPLICATION_PATH. DS . "libraries". DS . $ff . "php";
-            // }
+            $filePath = $dir . '/' . $ff;
+            if(is_dir($filePath)){
+                initializeLibraries($filePath); 
+            } else {
+                require $filePath;
+            }
         }
     }
 }
@@ -82,4 +85,3 @@ if(file_exists($get_view)){
 }
 
 require_once APPLICATION_PATH. DS . "structure" . DS . "end.phtml";
-?>
